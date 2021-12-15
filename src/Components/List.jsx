@@ -8,7 +8,7 @@ const UnstyledList = ({ className, title, items }) => {
       <h2>{title}</h2>
       <ul>
         {items.map((item) => {
-          return <Todo key={item.id} name={item.name} />;
+          return <Todo {...item} key={item.id} title={title} />;
         })}
       </ul>
     </div>
