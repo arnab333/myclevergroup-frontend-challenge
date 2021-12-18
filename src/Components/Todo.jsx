@@ -21,6 +21,12 @@ const UnstyledTodo = ({
     }
   }, [parentID]);
 
+  useEffect(() => {
+    if (!ctx.parentID) {
+      setParentID(null);
+    }
+  }, [ctx.parentID]);
+
   const onInputKeyDown = (e) => {
     if (e.key === 'Enter') {
       ctx.onAddTodo(subTask);
