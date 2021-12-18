@@ -79,6 +79,7 @@ export default function App() {
           id: prev[prev.length - 1].id + 1,
           name,
           isChecked: false,
+          subItems: [],
         },
       ]);
     }

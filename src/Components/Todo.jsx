@@ -37,9 +37,11 @@ const UnstyledTodo = ({
           </div>
           <div className="col-8 col-sm-10 pt-3">
             {name}
-            <div className="row py-2 subtask" onClick={() => setParentID(id)}>
-              <div className="col">+ Add Subtask</div>
-            </div>
+            {title === 'Todo' && (
+              <div className="row py-2 subtask" onClick={() => setParentID(id)}>
+                <div className="col">+ Add Subtask</div>
+              </div>
+            )}
           </div>
           <div className="col-2 col-sm-1">
             <Checkbox
