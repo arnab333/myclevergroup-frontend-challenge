@@ -11,7 +11,10 @@ const initialItems = [
     id: 1,
     name: 'Write documentation for new website',
     isChecked: false,
-    subItems: [{ id: 1, name: 'Hello there!', isChecked: false }],
+    subItems: [
+      { id: 1, name: 'Hello there!', isChecked: false },
+      { id: 2, name: 'Hello there 2!', isChecked: false },
+    ],
   },
   {
     id: 2,
@@ -199,22 +202,20 @@ export default function App() {
     }
   };
 
-  const onSelectChange = (event) => {
-    setParentID(event.target.value);
-  };
-
   return (
     <div className="App">
       <Layout>
         <Header />
-        <AddTodo
-          onSubmit={onAddTodo}
-          items={items}
-          onSelectChange={onSelectChange}
-          parentID={parentID}
-        />
+        <AddTodo onSubmit={onAddTodo} items={items} />
         <ContentContainer>
-          <TodoContext.Provider value={{ onCheckboxChange, onSubItemChange }}>
+          <TodoContext.Provider
+            value={{
+              onCheckboxChange,
+              onSubItemChange,
+              parentID,
+              setParentID,
+              onAddTodo,
+            }}>
             <List title="Todo" items={items} />
             <List title="Done" items={completedItems} />
           </TodoContext.Provider>

@@ -2,13 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import ContentContainer from './Layout/ContentContainer';
 
-const UnstyledAddTodo = ({
-  className,
-  onSubmit,
-  items = [],
-  onSelectChange,
-  parentID,
-}) => {
+const UnstyledAddTodo = ({ className, onSubmit, items = [] }) => {
   const [name, setName] = useState('');
 
   const handleSubmit = (e) => {
@@ -24,18 +18,6 @@ const UnstyledAddTodo = ({
           onSubmit={(e) => {
             handleSubmit(e);
           }}>
-          {items.length > 0 && (
-            <select value={parentID ?? ''} onChange={onSelectChange}>
-              <option value={''}>Please Select Item to Add Subitems</option>
-              {items.map((el) => {
-                return (
-                  <option key={el.id} value={el.id}>
-                    {el.name}
-                  </option>
-                );
-              })}
-            </select>
-          )}
           <input
             value={name}
             placeholder="Enter new Todo..."
@@ -75,7 +57,8 @@ const AddTodo = styled(UnstyledAddTodo)`
     font-size: 16px;
     width: 100%;
     &::placeholder {
-      color: ${(props) => props.theme.colors.text};
+      // color: ${(props) => props.theme.colors.text};
+      color: #414148;
       font-weight: 100;
     }
 
@@ -108,10 +91,10 @@ const AddTodo = styled(UnstyledAddTodo)`
     height: 46px;
     position: absolute;
     top: 8px;
-    right: 0;
+    right: 8px;
     border-radius: 46px;
     border: none;
-    background-color: blue;
+    background-color: #fb6664;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -125,7 +108,7 @@ const AddTodo = styled(UnstyledAddTodo)`
     }
 
     @media (max-width: ${(props) => props.theme.breakpoints.small}) {
-      top: 90px;
+      top: 16px;
     }
   }
 `;
