@@ -1,6 +1,8 @@
 import React, { useContext, Fragment, useEffect, useState } from 'react';
+import { Draggable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 import { TodoContext } from '../context/TodoContext';
+import { sectionTitle } from '../helpers/constants';
 import Handle from './Handle';
 
 const UnstyledTodo = ({
@@ -10,6 +12,7 @@ const UnstyledTodo = ({
   isChecked,
   subItems = [],
   title,
+  index,
 }) => {
   const ctx = useContext(TodoContext);
   const [parentID, setParentID] = useState(null);
@@ -36,67 +39,80 @@ const UnstyledTodo = ({
 
   return (
     <Fragment>
-      <li className={className}>
-        <div className="row">
-          <div className="col-2 col-sm-1 pt-3">
-            <Handle />
-          </div>
-          <div className="col-8 col-sm-10 pt-3">
-            {name}
-            {title === 'Todo' && (
-              <div className="row py-2 subtask" onClick={() => setParentID(id)}>
-                <div className="col">+ Add Subtask</div>
-              </div>
-            )}
-          </div>
-          <div className="col-2 col-sm-1">
-            <Checkbox
-              id={id}
-              name={name}
-              title={title}
-              subItems={subItems}
-              isChecked={isChecked}
-            />
-          </div>
-        </div>
-        {subItems.length > 0 &&
-          subItems.map((el) => {
-            return (
-              <Fragment key={el.id}>
-                <div className="row sub-items pb-3">
-                  <div className="offset-2 offset-sm-1 col-8 col-sm-10 pt-3">
-                    {el.name}
-                  </div>
-                  <div className="col-2 col-sm-1">
-                    <Checkbox
-                      id={el.id}
-                      itemID={id}
-                      name={el.name}
-                      title={title}
-                      subItems={subItems}
-                      isChecked={el.isChecked}
-                      isSmall
-                    />
-                  </div>
+      <Draggable key={id} draggableId={id} index={index}>
+        {(provided, snapshot) => {
+          return (
+            <div
+              className={className}
+              ref={provided.innerRef}
+              {...provided.draggableProps}
+              {...provided.dragHandleProps}>
+              <div className="row">
+                <div className="col-2 col-sm-1 pt-3">
+                  <Handle />
                 </div>
-              </Fragment>
-            );
-          })}
-        <div
-          className="row pb-2"
-          style={{ display: parentID ? 'flex' : 'none' }}>
-          <div className="col offset-2 offset-sm-1">
-            <input
-              type={'text'}
-              placeholder="Enter Subtask"
-              id="subTask"
-              value={subTask}
-              onChange={(e) => setSubTask(e.target.value)}
-              onKeyDown={onInputKeyDown}
-            />
-          </div>
-        </div>
-      </li>
+                <div className="col-8 col-sm-10 pt-3">
+                  {name}
+                  {title === sectionTitle.todo && (
+                    <div
+                      className="row py-2 subtask"
+                      onClick={() => setParentID(id)}>
+                      <div className="col">+ Add Subtask</div>
+                    </div>
+                  )}
+                </div>
+                <div className="col-2 col-sm-1">
+                  <Checkbox
+                    id={id}
+                    name={name}
+                    title={title}
+                    subItems={subItems}
+                    isChecked={isChecked}
+                  />
+                </div>
+              </div>
+              {subItems.length > 0 &&
+                subItems.map((el) => {
+                  return (
+                    <Fragment key={el.id}>
+                      <div className="row sub-items pb-3">
+                        <div className="offset-2 offset-sm-1 col-8 col-sm-10 pt-3">
+                          {el.name}
+                        </div>
+                        <div className="col-2 col-sm-1">
+                          <Checkbox
+                            id={el.id}
+                            itemID={id}
+                            name={el.name}
+                            title={title}
+                            subItems={subItems}
+                            isChecked={el.isChecked}
+                            isSmall
+                          />
+                        </div>
+                      </div>
+                    </Fragment>
+                  );
+                })}
+              <div
+                className="row pb-2"
+                style={{ display: parentID ? 'flex' : 'none' }}>
+                <div className="col offset-2 offset-sm-1">
+                  <input
+                    type={'text'}
+                    placeholder="Enter Subtask"
+                    id="subTask"
+                    value={subTask}
+                    onChange={(e) => setSubTask(e.target.value)}
+                    onKeyDown={onInputKeyDown}
+                  />
+                </div>
+              </div>
+              {provided.placeholder}
+            </div>
+          );
+        }}
+      </Draggable>
     </Fragment>
   );
 };

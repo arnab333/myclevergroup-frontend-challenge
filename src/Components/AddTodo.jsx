@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import ContentContainer from './Layout/ContentContainer';
 
-const UnstyledAddTodo = ({ className, onSubmit, items = [] }) => {
+const UnstyledAddTodo = ({ className, onSubmit }) => {
   const [name, setName] = useState('');
 
   const handleSubmit = (e) => {

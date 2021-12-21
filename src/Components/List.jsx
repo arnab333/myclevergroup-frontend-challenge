@@ -1,16 +1,25 @@
 import React from 'react';
+import { Droppable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 import Todo from './Todo';
 
-const UnstyledList = ({ className, title, items }) => {
+const UnstyledList = ({ className, title, items, columnId }) => {
   return (
     <div className={className}>
       <h2>{title}</h2>
-      <ul>
-        {items.map((item) => {
-          return <Todo {...item} key={item.id} title={title} />;
-        })}
-      </ul>
+      <Droppable droppableId={columnId}>
+        {(provided, snapshot) => {
+          return (
+            <div {...provided.droppableProps} ref={provided.innerRef}>
+              {items.map((item, index) => {
+                return (
+                  <Todo {...item} key={item.id} title={title} index={index} />
+                );
+              })}
+            </div>
+          );
+        }}
+      </Droppable>
     </div>
   );
 };
