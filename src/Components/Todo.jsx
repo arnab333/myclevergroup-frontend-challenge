@@ -174,7 +174,6 @@ const Checkbox = styled(UnstyledCheckbox)`
     left: 0;
     height: ${(props) => (props.isSmall ? '18px' : '25px')};
     width: ${(props) => (props.isSmall ? '18px' : '25px')};
-    background-color: #eee;
     /* custom */
     border-radius: 50%;
     background-color: #1c1c21;
@@ -182,16 +181,16 @@ const Checkbox = styled(UnstyledCheckbox)`
 
   /* On mouse-over, add a grey background color */
   .container:hover input ~ .checkmark {
-    background-color: #ccc;
-    /* custom */
     background-color: #fb6664;
   }
 
   /* When the checkbox is checked, add a blue background */
   .container input:checked ~ .checkmark {
-    background-color: #2196f3;
-    /* custom */
     background-color: #1c1c21;
+  }
+
+  .container:hover input ~ .checkmark {
+    background-color: #fb6664;
   }
 
   /* Create the checkmark/indicator (hidden when not checked) */
